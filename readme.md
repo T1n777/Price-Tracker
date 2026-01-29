@@ -2,185 +2,199 @@
 A clean, reliable, Python-powered **Amazon India price tracker** that monitors product prices and sends **real-time Telegram alerts** the moment the price drops below your target.
 
 Built using:
-- 🐍 Python 3  
-- 🔍 BeautifulSoup  
-- 💾 SQLite  
-- 🤖 Telegram Bot API  
-- ⏱ Scheduler (auto-check every 30 minutes)  
+- Python 3  
+- BeautifulSoup  
+- SQLite  
+- Telegram Bot API  
+- schedule  
 
 ---
 
 # 📸 Screenshots
 
-## 📩 Telegram Price Drop Alert   
+## Telegram Price Drop Alert  
 ![Telegram Alert](assets/alert.png)
 
-## 🖥 Terminal Output  
+## Terminal Output  
 ![Terminal Output](assets/terminal.png)
 
 ---
 
 # 🚀 Features
 
-### ✔ Accurate Amazon Price Scraper  
-Uses HTML + OpenGraph metadata + JSON + regex fallback to scrape Amazon even when bot-blocked.
-
-### ✔ Instant Telegram Alerts  
-Sends beautiful messages directly to your Telegram.
-
-### ✔ Automatic 30-Minute Scheduler  
-Runs silently in the background and checks price repeatedly.
-
-### ✔ Price Logging  
-Stores all prices in an SQLite database (`prices.db`).
-
-### ✔ Lightweight, No Selenium  
-No heavy browsers, no JavaScript rendering — fast and efficient.
-
----
-
-# 📁 Project Structure
-
-price_tracker/
-│
-├── tracker/
-│ ├── scraper.py # Hybrid Amazon scraper
-│ ├── scheduler.py # Auto-check scheduler + alert logic
-│ ├── alert.py # Telegram message sender
-│ ├── database.py # SQLite logging
-│ ├── utils.py # Utility functions
-│ └── init.py
-│
-├── main.py # Entry point (CLI)
-├── requirements.txt
-└── README.md
-
+- Accurate Amazon price scraping  
+- Real-time Telegram alerts  
+- 30-minute automated checking  
+- SQLite price history logging  
+- No Selenium / No browsers  
+- Lightweight and fast  
 
 ---
 
 # ⚙️ Installation
 
-Clone the repository:
+## 1. Clone the repository
 
-```bash
-git clone https://github.com/<your-username>/<repo-name>.git
-cd price_tracker
+```
+git clone https://github.com/T1n777/Price-Tracker.git
+cd Price-Tracker
+```
 
+## 2. Install dependencies
 
-# Install dependencies:
-
+```
 pip install -r requirements.txt
+```
 
+---
 
+# 🤖 Telegram Bot Setup
 
-# 🤖 Telegram Bot Setup (Very Important)
-1. Open Telegram
+## 1. Open Telegram  
+Search **@BotFather**
 
-Search for @BotFather
+## 2. Create a new bot  
+Send:
 
-2. Create a bot
+```
 /newbot
+```
 
-3. Copy your bot token
+BotFather will give you a **bot token** like:
 
-Example (NOT real):
+```
+123456789:ABCdefGhijKLMNOPqrs_tuvWXyz
+```
 
-123456:ABC-xyz123-sometoken
+## 3. Start your bot  
+Open your bot → press **Start**
 
-4. Start the bot
+## 4. Send a message  
+Write anything:
 
-Open your bot → press Start
+```
+hi
+```
 
-5. Send a message (like "hi")
-6. Get your chat ID
+## 5. Get your Telegram Chat ID  
+Paste this in your browser:
 
-Open in browser:
-
+```
 https://api.telegram.org/bot<YOUR_TOKEN>/getUpdates
+```
 
+You will see something like:
 
-Find:
-
+```
 "chat": { "id": xxxxxxxxxx }
+```
 
+That number 'xxxxxxxxxx' is your **chat ID**.
 
-That "xxxxxxxxxx" is your chat ID.
+---
 
+# ▶️ Running the Tracker
 
+Run the script:
 
-# ▶️ How to Use
-
-Run:
-
+```
 python main.py
+```
 
+You will be asked for:
 
-You will be asked:
+- Product URL  
+- Target price  
+- Bot token  
+- Chat ID  
 
-Product URL
+### Example:
 
-Target price
-
-Bot token
-
-Chat ID
-
-Example:
+```
 === PRICE TRACKER ===
 Enter product URL: https://www.amazon.in/dp/B0C9YMVX2C
 Enter target price (₹): 35000
 Enter your Telegram bot token: <TOKEN>
-Enter your Telegram chat ID: <CHAT_ID>
+Enter your Telegram chat ID: 8223377100
+```
 
+### Example Telegram alert:
 
-If the product is below your target, you instantly receive:
-
+```
 📉 PRICE DROP ALERT!
 
-ZOTAC Gaming RTX 4060 8GB
-Current Price: ₹33,389
-Your Target: ₹99,99,999
+ZOTAC Gaming RTX 4060 8GB  
+Current Price: ₹33,389  
+Your Target: ₹35,000  
 
 🔗 https://www.amazon.in/dp/B0C9YMVX2C
+```
 
+---
 
+# 📁 Project Structure
 
-# 🕸 How the Scraper Works (Short Technical Breakdown)
+```
+price_tracker/
+│
+├── tracker/
+│   ├── scraper.py
+│   ├── scheduler.py
+│   ├── alert.py
+│   ├── database.py
+│   ├── utils.py
+│   └── __init__.py
+│
+├── assets/
+│   ├── alert.png
+│   └── terminal.png
+│
+├── main.py
+├── requirements.txt
+├── pyproject.toml
+├── .gitignore
+└── README.md
+```
 
-Amazon blocks simple scrapers heavily, so this script:
+---
 
-Extracts Title From:
+# 🕸 How the Scraper Works
 
-<meta property="og:title">
+Amazon uses dynamic HTML based on region, device, and anti-bot checks.
 
-<title>
+To ensure reliability, the scraper extracts:
 
-JSON-LD schema ("name")
+### Title from:
+- `og:title`  
+- `<title>`  
+- JSON-LD schema `"name"`  
+- Amazon internal JSON structures  
 
-Amazon embedded product JSON ("title")
+### Price from:
+- `"priceAmount"` metadata  
+- Fallback regex to match ₹ values  
+- Filters out invalid prices (like ₹29 from hidden tags)  
 
-Extracts Price From:
+No Selenium required → faster and lightweight.
 
-"priceAmount" internal metadata
+---
 
-Fallback ₹ regex (ignores low junk values like ₹29)
+# 🗄 Database Schema
 
-This makes the scraper extremely consistent without needing Selenium.
+SQLite file: `prices.db`
 
-🗄 Database Schema (SQLite)
-
-The project uses a simple SQLite database:
-
-prices.db
-
-Table:
-
-url TEXT
+```
+url   TEXT
 price INTEGER
-date TEXT
+date  TEXT
+```
 
+---
 
+# 📝 License  
+MIT License — free to modify and reuse.
 
-# 📝 License
+---
 
-MIT License — feel free to modify and reuse.
+# ⭐ Support  
+If you like this project, please **star the repo**!
