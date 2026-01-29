@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "price-tracker"
+version = "1.0.0"
+description = "A lightweight Amazon India price tracker with Telegram alerts."
+authors = [
+    { name="Tin Man" }
+]
+readme = "README.md"
+requires-python = ">=3.10"
+
+dependencies = [
+    "beautifulsoup4>=4.12.0",
+    "requests>=2.31.0",
+    "schedule>=1.2.0",
+    "matplotlib>=3.8.0"
+]
+
+[project.scripts]
+price-tracker = "main:main"
