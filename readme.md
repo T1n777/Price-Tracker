@@ -1,3 +1,28 @@
+<p align="center">
+
+  <!-- Python version -->
+  <img src="https://img.shields.io/badge/Python-3.10%2B-blue" alt="Python Version">
+
+  <!-- License -->
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
+
+  <!-- Stars -->
+  <img src="https://img.shields.io/github/stars/T1n777/Price-Tracker?style=social" alt="GitHub Stars">
+
+  <!-- Forks -->
+  <img src="https://img.shields.io/github/forks/T1n777/Price-Tracker?style=social" alt="GitHub Forks">
+
+  <!-- Issues -->
+  <img src="https://img.shields.io/github/issues/T1n777/Price-Tracker" alt="GitHub Issues">
+
+  <!-- Last commit -->
+  <img src="https://img.shields.io/github/last-commit/T1n777/Price-Tracker" alt="Last Commit">
+
+  <!-- Repo size -->
+  <img src="https://img.shields.io/github/repo-size/T1n777/Price-Tracker" alt="Repo Size">
+
+</p>
+
 # 🛒 Price Tracker with Telegram Alerts  
 A clean, reliable, Python-powered **Amazon India price tracker** that monitors product prices and sends **real-time Telegram alerts** the moment the price drops below your target.
 
